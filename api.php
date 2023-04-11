@@ -14,6 +14,28 @@ use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\MunicipioController;
 use App\Http\Controllers\Historia_inicio_sesionController;
 use App\Http\Controllers\HistorialController;
+use App\Http\Controllers\AutenticacionController;
+
+
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+
+//grupo de rutas con propiedades en especifico
+
+Route::post("/auth/perfil", [AutenticacionController::class,'perfil']);
+
+Route::post("/auth/cerrar-sesion", [AutenticacionController::class,'cerrarSesion']);
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +53,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-////RUTAS PARA LA TABLA ALUMNO
+////RUTAS GET PARA LA TABLA ALUMNO
 
 
 Route::get('alumno/{alumno}', [AlumnoController::class, 'show']);
@@ -49,12 +71,11 @@ Route::get('alumno/{municipio}', [MunicipioController::class, 'show']);
 
 
 
+////RUTAS POST PARA LA TABLA ALUMNO
 
-
-
-
-
-
+Route::post("/auth/registro", [AutenticacionController::class, 'registro']); 
+Route::post("/auth/perfil", [AutenticacionController::class,'perfil']);
+Route::post("/auth/cerrar_sesion", [AutenticacionController::class,'cerrar_sesion']);
 
 
 
@@ -375,3 +396,11 @@ Route::get('municipio/{id_municipio}', function ($id_municipio) {
 Route::get('municipio/{nombre_municipio}', function ($nombre_municipio) {
     return "Nombre del municipio: $nombre_municipio";
  });
+
+
+///RUTAS PARA AUTENTIFICACION
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
